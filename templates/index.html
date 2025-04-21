@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bootkit Panel - kader11000</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body class="dashboard">
+  <header>
+    <h1 class="banner">BOOTKIT PANEL | kader11000</h1>
+    <a href="/logout">Logout</a>
+  </header>
+
+  <section class="upload-section">
+    <form method="post" action="/upload" enctype="multipart/form-data">
+      <label>Choose Operating System:</label>
+      <select name="system">
+        <option value="windows">Windows</option>
+        <option value="linux">Linux</option>
+        <option value="macos">macOS</option>
+      </select>
+      <input type="file" name="payload" required />
+      <button type="submit">Upload Payload</button>
+    </form>
+  </section>
+
+  <section class="actions">
+    <form method="post" action="/inject">
+      <input name="system" placeholder="windows/linux/macos" required />
+      <input name="filename" placeholder="Payload filename" required />
+      <button type="submit">Inject Hook</button>
+    </form>
+
+    <form method="post" action="/encrypt">
+      <input name="system" placeholder="windows/linux/macos" required />
+      <input name="filename" placeholder="Hooked payload filename" required />
+      <button type="submit">Encrypt Payload</button>
+    </form>
+
+    <form method="post" action="/simulate">
+      <button type="submit">Simulate Payload Execution</button>
+    </form>
+  </section>
+
+  <section class="devices">
+    <h2>Connected Devices</h2>
+    <ul>
+      {% for device, info in devices.items() %}
+      <li>{{ device }} — Last Seen: {{ info.last_seen }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="logs">
+    <h2>Recent Activity Logs</h2>
+    <ul>
+      {% for log in logs %}
+      <li>{{ log }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+</body>
+</html>
